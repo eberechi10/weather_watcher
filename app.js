@@ -47,4 +47,3 @@ document.getElementById('get-weather-button').addEventListener('click', function
     const location = document.getElementById('location-input').value;
     fetchWeather(location);
 });
-
