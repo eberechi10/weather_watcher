@@ -1,13 +1,15 @@
 // weather.js
-const API_KEY = 'de01b6f73b488446a43e7635fb7847e4';
+require('dotenv').config();
+
+const OPENWEATHERMAP_API_KEY1 = process.env.OPENWEATHERMAP_API_KEY1;
 
 function fetchWeather(location) {
-    const endpoint = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}`;
+    const endpoint = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${OPENWEATHERMAP_API_KEY1}`;
     fetchWeatherData(endpoint);
 }
 
 function fetchWeatherByCoords(latitude, longitude) {
-    const endpoint = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`;
+    const endpoint = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${OPENWEATHERMAP_API_KEY1}`;
     fetchWeatherData(endpoint);
 }
 

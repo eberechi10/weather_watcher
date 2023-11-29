@@ -1,8 +1,11 @@
+// weather.js
 
-const OPENWEATHER_API_KEY = 'fb7801f2ffed82b9101c28050f369827';
+require('dotenv').config();
+
+const OPENWEATHERMAP_API_KEY2 = process.env.OPENWEATHERMAP_API_Key2;
 
 function getCityName(latitude, longitude) {
-    const endpoint = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${OPENWEATHER_API_KEY}`;
+    const endpoint = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${OPENWEATHER_API_KEY2}`;
 
     // Make a fetch request to the OpenWeatherMap API
     return fetch(endpoint)
@@ -27,4 +30,5 @@ getCityName(latitude, longitude)
     .then(city => {
         console.log('City:', city);
         // Use the city name as needed in your application
+
     });

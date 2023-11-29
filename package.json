@@ -1,0 +1,24 @@
+{
+  "name": "weather_watcher",
+  "version": "1.0.0",
+  "description": "Weather Watcher Your Instant Weather Update Weather Watcher is a simple web app that provides users with instant access to current weather information for any location. Whether you're planning a trip or just curious about the weather outside, Weather Watcher has you covered.",
+  "main": "app.js",
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://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@github.com/eberechi10/weather_watcher.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eberechi10/weather_watcher/issues"
+  },
+  "homepage": "https://github.com/eberechi10/weather_watcher#readme"
+}
