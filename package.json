@@ -2,12 +2,15 @@
   "name": "weather_watcher",
   "version": "1.0.0",
   "description": "Weather Watcher Your Instant Weather Update Weather Watcher is a simple web app that provides users with instant access to current weather information for any location. Whether you're planning a trip or just curious about the weather outside, Weather Watcher has you covered.",
+  "type": "module",
   "main": "app.js",
   "dependencies": {
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {},
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

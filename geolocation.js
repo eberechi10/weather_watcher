@@ -1,11 +1,20 @@
-// weather.js
+#!/usr/bin/env node
+// geolocation.js
 
-require('dotenv').config();
+// Import required modules
+import fetch from 'node-fetch';
+import dotenv from 'dotenv';
 
-const OPENWEATHERMAP_API_KEY2 = process.env.OPENWEATHERMAP_API_Key2;
+// Check if running in Node.js or the browser
+const isNode = typeof window === 'undefined';
+
+// Load environment variables if running in Node.js
+if (isNode) {
+    dotenv.config();
+}
 
 function getCityName(latitude, longitude) {
-    const endpoint = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${OPENWEATHER_API_KEY2}`;
+    const endpoint = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.OPENWEATHERMAP_API_KEY2}`;
 
     // Make a fetch request to the OpenWeatherMap API
     return fetch(endpoint)
@@ -26,9 +35,11 @@ function getCityName(latitude, longitude) {
 const latitude = 40.7128;
 const longitude = -74.0060;
 
-getCityName(latitude, longitude)
-    .then(city => {
-        console.log('City:', city);
-        // Use the city name as needed in your application
-
-    });
+// Run the function if in Node.js environment
+if (isNode) {
+    getCityName(latitude, longitude)
+        .then(city => {
+            console.log('City:', city);
+            // Use the city name as needed in your application
+        });
+}
