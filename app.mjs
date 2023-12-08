@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 // Import required modules
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
@@ -45,3 +43,6 @@ function displayWeather(weatherData) {
         console.log(weatherData);
     }
 }
+
+// Export the functions for use in other modules
+export { showLoading, hideLoading, displayWeather };

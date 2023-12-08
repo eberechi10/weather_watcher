@@ -1,5 +1,4 @@
-#!/usr/bin/env node
-// weather.js
+// weather.mjs
 
 // Import required modules
 import fetch from 'node-fetch';
@@ -15,92 +14,92 @@ if (isNode) {
 
 // Function to show the loading image
 function showLoading() {
-    console.log('Loading...');
+    // Check if document is available (browser environment)
+    if (!isNode) {
+        document.getElementById('loading-container').style.display = 'block';
+    }
 }
 
 // Function to hide the loading image
 function hideLoading() {
-    console.log('Loading hidden.');
+    // Check if document is available (browser environment)
+    if (!isNode) {
+        document.getElementById('loading-container').style.display = 'none';
+    }
 }
 
 // Function to display weather data
 function displayWeather(weatherData) {
-    console.log('Weather Data:', weatherData);
+    // Check if document is available (browser environment)
+    if (!isNode) {
+        const temperatureElement = document.getElementById('temperature');
+        const conditionElement = document.getElementById('condition');
+        const timeElement = document.getElementById('time');
+
+        // Display weather data in corresponding HTML elements
+        temperatureElement.textContent = `Temperature: ${weatherData.temperature} K`;
+        conditionElement.textContent = `Condition: ${weatherData.condition}`;
+        timeElement.textContent = `Time: ${weatherData.time}`;
+    } else {
+        // Handle server-side rendering or other scenarios
+        console.log(weatherData);
+    }
 }
 
-// Fetch weather data
-function fetchWeather(location) {
-    showLoading(); // Show loading image while fetching data
-
-    // Simulate an asynchronous request (replace this with your actual API request)
-    setTimeout(() => {
-        // Simulating a successful response with weather data (replace this with actual data)
-        const weatherData = {
-            temperature: '25°C',
-            condition: 'Sunny',
-            time: '12:00 PM'
-        };
-
-        // Process and display weather data
-        displayWeather(weatherData);
-        // Hide loading image when data is received
-        hideLoading();
-    }, 2000); // Simulating a 2-second delay
-}
-
-// Event listener for a button click (only if running in the browser)
-if (!isNode) {
-    document.getElementById('get-weather-button').addEventListener('click', function () {
-        const location = document.getElementById('location-input').value;
-        fetchWeather(location);
-    });
-}
-
-// Run the fetchWeather function if in Node.js environment
-if (isNode) {
+// Export functions for use in other modules
+export function getWeather(location) {
     const OPENWEATHERMAP_API_KEY1 = process.env.OPENWEATHERMAP_API_KEY1;
+    const endpoint = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${OPENWEATHERMAP_API_KEY1}`;
+    fetchWeatherData(endpoint);
+}
 
-    function fetchWeather(location) {
-        const endpoint = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${OPENWEATHERMAP_API_KEY1}`;
-        fetchWeatherData(endpoint);
-    }
+export function getCurrentLocation() {
+    // Assume you have functions to get latitude and longitude
+    const latitude = getLatitude(); // Replace with your logic
+    const longitude = getLongitude(); // Replace with your logic
+    const OPENWEATHERMAP_API_KEY1 = process.env.OPENWEATHERMAP_API_KEY1;
+    const endpoint = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${OPENWEATHERMAP_API_KEY1}`;
+    fetchWeatherData(endpoint);
+}
 
-    function fetchWeatherByCoords(latitude, longitude) {
-        const endpoint = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${OPENWEATHERMAP_API_KEY1}`;
-        fetchWeatherData(endpoint);
-    }
+export function fetchWeatherByCoords(latitude, longitude) {
+    const OPENWEATHERMAP_API_KEY1 = process.env.OPENWEATHERMAP_API_KEY1;
+    const endpoint = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${OPENWEATHERMAP_API_KEY1}`;
+    fetchWeatherData(endpoint);
+}
 
-    function fetchWeatherData(endpoint) {
-        // Show loading image while fetching data
-        showLoading();
+export function fetchWeatherData(endpoint) {
+    // Show loading image while fetching data
+    showLoading();
 
-        fetch(endpoint)
-            .then(response => response.json())
-            .then(data => {
-                // Hide loading image when data is received
-                hideLoading();
+    fetch(endpoint)
+        .then(response => response.json())
+        .then(data => {
+            // Hide loading image when data is received
+            hideLoading();
 
-                // Update weather information in the HTML
-                updateWeatherInfo(data);
-            })
-            .catch(error => {
-                // Hide loading image in case of an error
-                hideLoading();
+            // Update weather information in the HTML
+            updateWeatherInfo(data);
+        })
+        .catch(error => {
+            // Hide loading image in case of an error
+            hideLoading();
 
-                // Display an error message
-                console.error('Weather API error:', error);
-            });
-    }
+            // Display an error message
+            console.error('Weather API error:', error);
+        });
+}
 
-    function updateWeatherInfo(data) {
-        // Extract relevant data from the API response
-        const temperature = data.main.temp;
-        const condition = data.weather[0].description;
-        const time = new Date(data.dt * 1000).toLocaleTimeString();
+export function updateWeatherInfo(data) {
+    // Extract relevant data from the API response
+    const temperature = data.main.temp;
+    const condition = data.weather[0].description;
+    const time = new Date(data.dt * 1000).toLocaleTimeString();
 
-        // Update the corresponding HTML elements with the extracted data
-        console.log('Temperature:', temperature, 'K');
-        console.log('Condition:', condition);
-        console.log('Time:', time);
-    }
+    // Update the corresponding HTML elements with the extracted data
+    displayWeather({
+        temperature,
+        condition,
+        time
+    });
 }

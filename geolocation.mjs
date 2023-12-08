@@ -43,3 +43,6 @@ if (isNode) {
             // Use the city name as needed in your application
         });
 }
+
+// Export the function for use in other modules
+export { getCityName };

@@ -12,16 +12,38 @@
     </div>
     <div class="container">
         <input type="text" id="locationInput" placeholder="Enter location">
-        <button onclick="getWeather()">Get Weather</button>
-        <button onclick="getCurrentLocation()">Get Current Location Weather</button>
+        <button id="get-weather-button">Get Weather</button>
+        <button id="get-current-location-button">Get Current Location Weather</button>
         <div id="weatherInfo">
             <div id="temperature"></div>
             <div id="condition"></div>
             <div id="time"></div>
         </div>
     </div>
-    <script src="app.mjs"></script>
-    <script src="weather.mjs"></script>
-    <script src="geolocation.mjs"></script>
+
+    <script type="module">
+        import { showLoading, hideLoading, displayWeather } from './app.mjs';
+        import { getCityName } from './geolocation.mjs';
+        import { fetchWeather, fetchWeatherByCoords, fetchWeatherData, updateWeatherInfo } from './weather.mjs';
+
+        // Your existing code
+    </script>
+    <script type="module" src="app.mjs"></script>
+    <script type="module" src="weather.mjs"></script>
+    <script type="module" src="geolocation.mjs"></script>
+    <script type="module">
+        import { getWeather, getCurrentLocation } from './weather.mjs';
+
+        // Event listener for a button click (only if running in the browser)
+        document.getElementById('get-weather-button').addEventListener('click', function () {
+            const location = document.getElementById('locationInput').value;
+            getWeather(location);
+        });
+
+        // Event listener for a button click (only if running in the browser)
+        document.getElementById('get-current-location-button').addEventListener('click', function () {
+            getCurrentLocation();
+        });
+    </script>
 </body>
 </html>
