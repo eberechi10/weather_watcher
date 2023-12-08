@@ -1,7 +1,7 @@
 // weather.mjs
 
 // Import required modules
-import fetch from 'node-fetch';
+import fetch from 'isomorphic-fetch';
 import dotenv from 'dotenv';
 
 // Check if running in Node.js or the browser
