@@ -1,8 +1,6 @@
-#!/usr/bin/env node
 // geolocation.js
 
 // Import required modules
-import fetch from 'isomorphic-fetch';
 import dotenv from 'dotenv';
 
 // Check if running in Node.js or the browser
@@ -10,24 +8,29 @@ const isNode = typeof window === 'undefined';
 
 // Load environment variables if running in Node.js
 if (isNode) {
-    dotenv.config();
+    // You can add dotenv configuration for Node.js here if needed
 }
 
-function getCityName(latitude, longitude) {
+async function getCityName(latitude, longitude) {
     const endpoint = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.OPENWEATHERMAP_API_KEY2}`;
 
-    // Make a fetch request to the OpenWeatherMap API
-    return fetch(endpoint)
-        .then(response => response.json())
-        .then(data => {
-            // Extract the city name from the API response
-            const city = data.name;
-            return city;
-        })
-        .catch(error => {
-            console.error('Error fetching city name:', error);
-            return null; // Return null in case of an error
-        });
+    try {
+        // Make a fetch request to the OpenWeatherMap API
+        const response = await window.fetch(endpoint);
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch data from OpenWeatherMap API');
+        }
+
+        // Extract the city name from the API response
+        const data = await response.json();
+        const city = data.name;
+
+        return city;
+    } catch (error) {
+        console.error('Error fetching city name:', error);
+        return null; // Return null in case of an error
+    }
 }
 
 // Example usage

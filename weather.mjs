@@ -1,7 +1,7 @@
 // weather.mjs
 
 // Import required modules
-import fetch from 'isomorphic-fetch';
+import fetch from 'isomorphic-fetch'; // or 'node-fetch'
 import dotenv from 'dotenv';
 
 // Check if running in Node.js or the browser
@@ -72,7 +72,10 @@ export function fetchWeatherData(endpoint) {
     // Show loading image while fetching data
     showLoading();
 
-    fetch(endpoint)
+    // Use window.fetch in the browser environment
+    const fetchMethod = isNode ? fetch : window.fetch;
+
+    fetchMethod(endpoint)
         .then(response => response.json())
         .then(data => {
             // Hide loading image when data is received
